@@ -15,7 +15,7 @@
 			"response": []
 		},
 		{
-			"name": "Request name",
+			"name": "Request username",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -43,6 +43,15 @@
 		},
 		{
 			"name": "Invalid id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "Bad Request",
 			"request": {
 				"method": "GET",
 				"header": [],

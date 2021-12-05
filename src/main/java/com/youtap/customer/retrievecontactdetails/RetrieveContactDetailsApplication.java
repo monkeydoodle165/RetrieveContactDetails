@@ -18,7 +18,7 @@ import com.youtap.customer.retrievecontactdetails.businessobjects.User;
 
 /**
  * Microservice that retrieves a list of Users from a webservice and returns the id, email and phone number
- * for the user which matches the id or name specified as a parameter.
+ * for the user which matches the id or username specified as a parameter.
  * 
  * @author Jason Knight
  *
@@ -36,16 +36,16 @@ public class RetrieveContactDetailsApplication {
 	}
 	
 	@GetMapping(USER_CONTACTS_ENDPOINT)
-	public String getUserContacts(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "id", required = false) String id) {		
+	public String getUserContacts(@RequestParam(value = "username", required = false) String username, @RequestParam(value = "id", required = false) String id) {		
 		ObjectMapper objectMapper = new ObjectMapper();
 		int idInt = 0;
 		
 		try {
-			if(inputsEmpty(name, id)) {
+			if(inputsEmpty(username, id)) {
 				throw new Exception(ServiceError.errorMessages.get(Errors.NO_PARAMETERS_ENTERED_ERROR));
 			}
 			
-			if(inputsNotEmpty(name, id)) {
+			if(inputsNotEmpty(username, id)) {
 				throw new Exception(ServiceError.errorMessages.get(Errors.MULTI_PARAMTERS_ENTERED_ERROR));
 			}
 			
@@ -64,11 +64,7 @@ public class RetrieveContactDetailsApplication {
 			ResponseEntity<User[]> users = restTemplate.getForEntity(USERS_API_URL, User[].class);
 			
 			//Search for user
-			User result = filterUsers(users, idInt, name);
-			
-			if(result == null) {
-				throw new Exception(ServiceError.errorMessages.get(Errors.NO_RESULTS_FOUND_ERROR));
-			}
+			User result = filterUsers(users, idInt, username);
 			
 			//Map the response message
 			ContactInformation output = new ContactInformation(result.getId(), result.getEmail(), result.getPhone());
@@ -87,29 +83,29 @@ public class RetrieveContactDetailsApplication {
 		}
 	}
 	
-	private User filterUsers(ResponseEntity<User[]> users, int id, String name) {
-		//Search for a user by either name or id
+	private User filterUsers(ResponseEntity<User[]> users, int id, String username) {
+		//Search for a user by either username or id
 		for(User user : users.getBody()) {
 			if(id != 0) {
 				if(user.getId() == id) {
 					return user;
 				}
 			}
-			if(!ObjectUtils.isEmpty(name)) {
-				if(user.getName().equals(name)) {
+			if(!ObjectUtils.isEmpty(username)) {
+				if(user.getUsername().equals(username)) {
 					return user;		
 				}
 			}
 		}
-		return null;
+		return new User();
 	}
 
-	private boolean inputsEmpty(String id, String name) {
-		return (ObjectUtils.isEmpty(id) && ObjectUtils.isEmpty(name));
+	private boolean inputsEmpty(String id, String username) {
+		return (ObjectUtils.isEmpty(id) && ObjectUtils.isEmpty(username));
 	}
 	
-	private boolean inputsNotEmpty(String id, String name) {
-		return (!ObjectUtils.isEmpty(id) && !ObjectUtils.isEmpty(name));
+	private boolean inputsNotEmpty(String id, String username) {
+		return (!ObjectUtils.isEmpty(id) && !ObjectUtils.isEmpty(username));
 	}
 	
 	private ServiceError buildErrorMessage(String errorMessage) {

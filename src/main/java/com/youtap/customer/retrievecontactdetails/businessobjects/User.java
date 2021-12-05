@@ -11,6 +11,10 @@ public class User {
 	private String website;
 	private Company company;
 	
+	public User(){
+		id = -1;
+	}
+	
 	public int getId() {
 		return id;
 	}
