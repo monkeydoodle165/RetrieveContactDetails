@@ -1,4 +1,4 @@
-package com.youtap.customer.RetrieveContactDetails;
+package com.youtap.customer.retrievecontactdetails.businessobjects;
 
 public class User {
 	

@@ -1,4 +1,4 @@
-package com.youtap.customer.RetrieveContactDetails;
+package com.youtap.customer.retrievecontactdetails.businessobjects;
 
 public class Geo {
 
@@ -8,12 +8,15 @@ public class Geo {
 	public Double getLat() {
 		return lat;
 	}
+	
 	public void setLat(Double lat) {
 		this.lat = lat;
 	}
+	
 	public Double getLng() {
 		return lng;
 	}
+	
 	public void setLng(Double lng) {
 		this.lng = lng;
 	}

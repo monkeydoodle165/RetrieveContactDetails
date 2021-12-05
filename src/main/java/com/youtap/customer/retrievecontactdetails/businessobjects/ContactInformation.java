@@ -1,5 +1,4 @@
-package com.youtap.customer.RetrieveContactDetails;
-
+package com.youtap.customer.retrievecontactdetails.businessobjects;
 
 public class ContactInformation {
 
@@ -17,18 +16,23 @@ public class ContactInformation {
 	public int getId() {
 		return id;
 	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 	public String getPhone() {
 		return phone;
 	}
+	
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
